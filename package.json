@@ -1,0 +1,12 @@
+{
+  "name": "dialvo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Retro Solana market terminal with a Connect To entry page",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "node server.cjs",
+    "dev": "node --watch server.cjs",
+    "test": "node --test test/*.test.cjs"
+  }
+}
