@@ -48,9 +48,17 @@ docker run --rm -p 1999:1999 dialvo
 
 将代码上传到 GitHub 不等于已经发布网站。GitHub Pages 可提供静态页面，但不能运行此 Node.js 行情转发服务；完整运行应部署 Node.js 服务或 Docker 容器。
 
+### GitHub Pages 首页
+
+仓库根目录提供 `index.html` 和 `.nojekyll`。从 `main` 分支的根目录发布时，会直接显示 Connect To 登录入口，按钮跳转到 `public/dialvo-terminal.html#trenches`。静态资源使用仓库子路径下的相对地址。
+
+本地 Node 服务继续使用 `public/index.html`。GitHub Pages 不提供 `/api`，行情会尝试直接请求公开数据源；实际可用性取决于浏览器网络与数据源的跨域设置。
+
 ## 目录
 
 ```text
+index.html
+.nojekyll
 public/
   index.html
   dialvo-login.html
