@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>DIALVO — The trenches, back in 1999.</title>
-<meta name="description" content="DIALVO: a retro Solana discovery terminal. Browse new pairs, follow bonding curves and explore token homepages in a Windows 98 inspired desktop.">
-<meta name="theme-color" content="#008080"><link rel="icon" href="assets/logo.webp">
+<meta name="description" content="DIALVO: a retro Solana discovery terminal. Explore indexed Solana pools, live quotes, liquidity and token charts.">
+<meta name="theme-color" content="#030a2c"><link rel="icon" href="assets/logo.webp">
 
 
 
 
-<link rel="stylesheet" href="styles/terminal.css">
+<link rel="stylesheet" href="styles/terminal.css?v=production-1">
 </head>
 <body>
 <svg aria-hidden="true" width="0" height="0" style="position:absolute"><defs>
@@ -22,7 +22,7 @@
 <div class="menurow"><button data-action="about"><u>F</u>ile</button><button data-action="density"><u>V</u>iew</button><button data-action="filter"><u>T</u>ools</button><button data-action="about"><u>H</u>elp</button><span class="menuhint">Your internet money deserves a homepage.</span></div>
 <header class="mainbar"><div class="brand"><img class="brand-logo" src="assets/logo.webp" alt="DIALVO computer globe logo"><div><div class="wordmark">DIALVO</div><small>ON-CHAIN. OLD SCHOOL.</small></div></div><nav class="navigation" aria-label="Main navigation"><button class="nav active" data-view="trenches">Trenches</button><button class="nav" data-view="trending">Trending</button><button class="nav" data-view="watchlist">Watchlist <em id="watch-count">0</em></button><button class="nav" data-view="wallets">Liquidity</button></nav><label class="searchbox inset"><svg class="ico"><use href="#i-search"/></svg><input id="global-search" type="search" aria-label="Search tokens" placeholder="Token name or contract address…"><kbd>/</kbd></label><button class="btn wallet-button" data-view="watchlist"><svg class="ico"><use href="#i-star"/></svg><span>Watchlist</span></button></header>
 <div class="ticker" id="market-ticker"><span class="market-label">SOLANA MARKETS</span><span>Connecting to markets…</span></div>
-<section class="workspace"><div class="toolbar"><h1 class="workspace-title" id="view-title"><svg class="ico"><use href="#i-chart"/></svg>Trenches</h1><span class="chain"><span class="sol"></span>SOLANA</span><span class="toolbar-spacer"></span><span class="feed-indicator"><i class="dot"></i><span id="feed-label">CONNECTING</span></span><button class="btn" id="pause" data-action="pause" aria-label="Pause market updates">Ⅱ Pause</button><select id="sort" aria-label="Sort tokens"><option value="age">Newest first</option><option value="cap">Market cap ↓</option><option value="volume">Volume ↓</option><option value="liquidity">Liquidity ↓</option></select><button class="btn density-btn icon-only" data-action="density" title="Toggle compact rows" aria-label="Toggle compact rows"><svg class="ico"><use href="#i-grid"/></svg></button><button class="btn" id="filter-btn" data-action="filter"><svg class="ico"><use href="#i-filter"/></svg>Filters <span class="filter-count" id="filter-count" hidden>0</span></button></div>
+<section class="workspace"><div class="toolbar"><h1 class="workspace-title" id="view-title"><svg class="ico"><use href="#i-chart"/></svg>Trenches</h1><span class="chain"><span class="sol"></span>SOLANA</span><span class="toolbar-spacer"></span><span class="feed-indicator"><i class="dot"></i><span id="feed-label">CONNECTING</span></span><button class="btn" id="refresh" data-action="refresh">? Refresh</button><button class="btn" id="pause" data-action="pause" aria-label="Pause market updates">Ⅱ Pause</button><select id="period" aria-label="Quote period"><option value="m5">5M</option><option value="h1">1H</option><option value="h6">6H</option><option value="h24" selected>24H</option></select><select id="sort" aria-label="Sort tokens"><option value="default">Lane ranking</option><option value="age">Newest first</option><option value="cap">Market cap ↓</option><option value="volume">Volume ↓</option><option value="liquidity">Liquidity ↓</option></select><button class="btn density-btn icon-only" data-action="density" title="Toggle compact rows" aria-label="Toggle compact rows"><svg class="ico"><use href="#i-grid"/></svg></button><button class="btn" id="filter-btn" data-action="filter"><svg class="ico"><use href="#i-filter"/></svg>Filters <span class="filter-count" id="filter-count" hidden>0</span></button></div>
 <div class="mobile-stages" id="mobile-stages"><button class="active" data-stage="new">New pools</button><button data-stage="bonding">Active markets</button><button data-stage="migrated">Top gainers</button></div>
 <div class="board" id="board"></div><div class="table-view" id="table-view" hidden></div></section>
 <footer class="statusbar"><span id="status-message">Connecting to market data.</span><span class="status-source">DEX SCREENER</span><span class="status-load"></span><span id="shown-count">0 tokens</span></footer>
@@ -31,5 +31,6 @@
 <div class="start-menu bevel" id="start-menu" hidden><span class="start-side">DIALVO 98</span><button data-view="trenches">▣ &nbsp; Trenches Terminal</button><button data-view="watchlist">★ &nbsp; My Watchlist</button><button data-view="wallets">▤ &nbsp; Liquidity</button><button data-view="watchlist">▥ &nbsp; Watchlist</button><hr><button data-action="about">▧ &nbsp; About DIALVO</button></div>
 <div class="overlay" id="overlay" hidden><section class="dialog bevel" role="dialog" aria-modal="true" aria-labelledby="dialog-title" id="dialog"><div class="titlebar"><img src="assets/logo.webp" alt=""><span class="title" id="dialog-title">DIALVO</span><div class="window-controls"><button class="btn" data-action="close" aria-label="Close dialog">×</button></div></div><div class="dialog-body" id="dialog-body"></div><div class="dialog-footer" id="dialog-footer" hidden></div></section></div>
 <div id="toast" class="notification" role="status" hidden></div>
-<script src="scripts/terminal.js" defer></script>
+<script src="scripts/market-model.js?v=production-1" defer></script>
+<script src="scripts/terminal.js?v=production-1" defer></script>
 </body></html>

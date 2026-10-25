@@ -1,0 +1,65 @@
+name: DIALVO verified release
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: '7,22,37,52 * * * *'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: dialvo-production
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate application and paths
+        run: npm test
+      - name: Collect real Solana market snapshot
+        run: npm run snapshot
+      - name: Install browser for release checks
+        if: github.event_name != 'schedule'
+        run: |
+          npm install --prefix "$RUNNER_TEMP/dialvo-browser" --no-save --package-lock=false playwright@1.56.1
+          "$RUNNER_TEMP/dialvo-browser/node_modules/.bin/playwright" install --with-deps chromium
+      - name: Verify live quotes, interactions and mobile fallback
+        if: github.event_name != 'schedule'
+        env:
+          PLAYWRIGHT_MODULE: ${{ runner.temp }}/dialvo-browser/node_modules/playwright
+        run: npm run test:browser
+      - name: Preserve acceptance report and screenshots
+        if: always() && github.event_name != 'schedule'
+        uses: actions/upload-artifact@v4
+        with:
+          name: dialvo-acceptance
+          path: artifacts/
+          retention-days: 7
+      - name: Build static production bundle
+        run: npm run build:pages
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publish verified build
+        id: deployment
+        uses: actions/deploy-pages@v4
