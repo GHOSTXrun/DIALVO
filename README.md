@@ -46,7 +46,7 @@ npm run build:pages
 
 提交至 `main` 会执行单元测试、真实行情采集及浏览器检查。检查覆盖登录入口、真实响应、后续报价请求、自选持久化、三栏排序、筛选、合约搜索、暂停更新和手机端快照回退。结果与截图保存在 Actions 的 `dialvo-acceptance` artifact。通过后上传 `dist/` 并部署到 GitHub Pages；定时刷新只重新运行测试、采集和发布。
 
-如果发布失败，检查 Actions 的失败步骤。GitHub Pages 需已启用，并允许 `github-pages` 环境从 `main` 发布；仓库提供根 `index.html` 和 `.nojekyll`，不会将 README 当作产品首页。
+发布后还会直接请求线上首页、战壕、脚本、配色和行情快照，确认展示的是应用而非 README，且快照包含近期采集的真实交易对。如果发布失败，检查 Actions 的失败步骤。GitHub Pages 需已启用，并允许 `github-pages` 环境从 `main` 发布；仓库提供根 `index.html` 和 `.nojekyll`，不会将 README 当作产品首页。
 
 浏览器验收脚本需要 Playwright。CI 会安装它；本地可安装 Playwright 或通过 `PLAYWRIGHT_MODULE` 指定已有模块。`BROWSER_EXECUTABLE` 可指定本机 Chromium / Edge。`--fixture` 仅用于离线交互测试，不会将测试数据写入发布目录；CI 的发布验收使用真实行情源。
 

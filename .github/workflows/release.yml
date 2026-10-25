@@ -63,3 +63,8 @@ jobs:
       - name: Publish verified build
         id: deployment
         uses: actions/deploy-pages@v4
+      - uses: actions/checkout@v6
+      - name: Verify the published homepage and real-market snapshot
+        env:
+          DIALVO_SITE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: node scripts/verify-published.cjs
